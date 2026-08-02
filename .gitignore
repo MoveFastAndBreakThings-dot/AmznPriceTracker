@@ -1,0 +1,15 @@
+# Real secrets, never committed
+chrome-extension/config.js
+
+# Old Playwright prototype (superseded by the chrome extension) and its
+# generated artifacts / venv
+.venv/
+__pycache__/
+debug_page.html
+debug_screenshot.png
+debug_page.py
+price_checker.py
+run.sh
+
+# OS/editor cruft
+.DS_Store

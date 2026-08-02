@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        --bg: #f4f5f7;
+        --card: #ffffff;
+        --border: #e7e9ec;
+        --text: #14161a;
+        --muted: #767c87;
+        --accent-1: #ff9f1c;
+        --accent-2: #ff5e62;
+        --green: #1a7f37;
+        --green-bg: #dcfce7;
+        --gray-bg: #eceef1;
+        --danger: #d1242f;
+        --danger-bg: #fde8e8;
+        --shadow: 0 1px 2px rgba(20, 22, 26, 0.04), 0 8px 24px rgba(20, 22, 26, 0.07);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #17181b;
+          --card: #212226;
+          --border: #302f2f;
+          --text: #f2f3f5;
+          --muted: #93989f;
+          --green-bg: #113321;
+          --gray-bg: #2d2f34;
+          --danger-bg: #3a1a1a;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 360px;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .topbar {
+        height: 5px;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px 4px;
+      }
+
+      .logo {
+        width: 26px;
+        height: 26px;
+        border-radius: 7px;
+        background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+
+      .header h1 {
+        font-size: 14px;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -0.01em;
+      }
+
+      .header p {
+        margin: 0;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .content {
+        padding: 12px 16px 16px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .status-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .status-row .label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--muted);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .badge.active {
+        background: var(--green-bg);
+        color: var(--green);
+      }
+
+      .badge.inactive {
+        background: var(--gray-bg);
+        color: var(--muted);
+      }
+
+      .pulse {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      .badge.active .pulse {
+        animation: pulse 1.6s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(26, 127, 55, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 6px rgba(26, 127, 55, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(26, 127, 55, 0);
+        }
+      }
+
+      .price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .price-display {
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .price-delta {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .price-delta.close {
+        color: var(--accent-2);
+      }
+
+      .progress-track {
+        height: 8px;
+        border-radius: 999px;
+        background: var(--gray-bg);
+        overflow: hidden;
+        margin: 10px 0 12px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        width: 0%;
+        transition: width 0.4s ease;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        font-size: 11px;
+      }
+
+      .meta-item .k {
+        color: var(--muted);
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        font-size: 10px;
+        margin-bottom: 2px;
+      }
+
+      .meta-item .v {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .result-line {
+        font-size: 12px;
+        margin-top: 10px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: var(--gray-bg);
+        color: var(--muted);
+      }
+
+      .result-line.error {
+        background: var(--danger-bg);
+        color: var(--danger);
+      }
+
+      label {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      label.spaced {
+        margin-top: 12px;
+      }
+
+      input {
+        width: 100%;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 11px;
+        font-size: 13px;
+        color: var(--text);
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--accent-1);
+        box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.15);
+      }
+
+      .buttons {
+        display: flex;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      button {
+        flex: 1;
+        padding: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.1s, opacity 0.15s;
+      }
+
+      button:active {
+        transform: scale(0.98);
+      }
+
+      button:hover {
+        opacity: 0.92;
+      }
+
+      #startBtn {
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        color: #14161a;
+      }
+
+      #stopBtn {
+        background: var(--gray-bg);
+        color: var(--text);
+      }
+
+      #startBtn:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+
+      .footer {
+        text-align: center;
+        font-size: 10px;
+        color: var(--muted);
+        padding-bottom: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar"></div>
+
+    <div class="header">
+      <div class="logo">🏷️</div>
+      <div>
+        <h1>Price Watcher</h1>
+        <p>Amazon.ca tracker</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="card">
+        <div class="status-row">
+          <span class="label">Status</span>
+          <span id="badge" class="badge inactive"><span class="pulse"></span>Stopped</span>
+        </div>
+
+        <div class="price-row">
+          <span id="priceDisplay" class="price-display">—</span>
+          <span id="priceDelta" class="price-delta"></span>
+        </div>
+
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+        <div class="meta-grid">
+          <div class="meta-item">
+            <div class="k">Target</div>
+            <div id="metaTarget" class="v">—</div>
+          </div>
+          <div class="meta-item">
+            <div class="k">Next check</div>
+            <div id="metaNext" class="v">—</div>
+          </div>
+          <div class="meta-item">
+            <div class="k">Last checked</div>
+            <div id="metaChecked" class="v">never</div>
+          </div>
+          <div class="meta-item">
+            <div class="k">Checks logged</div>
+            <div id="metaCount" class="v">0</div>
+          </div>
+        </div>
+
+        <div id="resultLine" class="result-line" style="display: none"></div>
+      </div>
+
+      <div class="card">
+        <label for="url">Product URL</label>
+        <input id="url" type="text" placeholder="https://www.amazon.ca/dp/ASIN" />
+
+        <label class="spaced" for="targetPrice">Target price (CAD)</label>
+        <input id="targetPrice" type="number" step="0.01" placeholder="89.99" />
+
+        <div class="buttons">
+          <button id="startBtn">▶ Start</button>
+          <button id="stopBtn">■ Stop</button>
+        </div>
+      </div>
+
+      <div class="footer">Emails via EmailJS · Checks every 60 min</div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

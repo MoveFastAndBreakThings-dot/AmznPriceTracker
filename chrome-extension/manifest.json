@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Amazon Price Watcher",
+  "version": "1.0",
+  "description": "Notifies once when a tracked Amazon.ca product drops to your target price.",
+  "permissions": ["alarms", "notifications", "storage"],
+  "host_permissions": ["https://www.amazon.ca/*", "https://api.emailjs.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon128.png"
+  },
+  "icons": {
+    "128": "icon128.png"
+  }
+}
